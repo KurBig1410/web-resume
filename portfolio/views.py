@@ -5,6 +5,35 @@ from .serializers import (
     AboutSerializer, SkillCategorySerializer, ExperienceSerializer,
     ProjectSerializer, ContactSerializer
 )
+from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+
+
+import markdown
+from django.utils.safestring import mark_safe
+
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    rendered_description = mark_safe(markdown.markdown(project.description))
+    return render(request, 'myresume/project_detail.html', {
+        'project': project,
+        'description_html': rendered_description
+    })
+
+
+
+def resume_view(request):
+    about = About.objects.first()
+    skills = SkillCategory.objects.prefetch_related('skills').all()
+    projects = Project.objects.all()
+    contact = Contact.objects.first()
+
+    return render(request, 'myresume/resume.html', {
+        'about': about,
+        'skills': skills,
+        'projects': projects,
+        'contact': contact
+    })
 
 @api_view(['GET'])
 def about_view(request):

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title|default:"Резюме" }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        plugins: [tailwindcss.typography],
+      };
+    </script>
+    <style>
+      body {
+        font-family: monospace;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        plugins: [tailwindcss.typography],
+      }
+    </script>
+  </head>
+  <body class="bg-black text-green-300 p-6">
+    {% block content %}{% endblock %}
+  </body>
+</html>

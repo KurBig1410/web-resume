@@ -1,0 +1,74 @@
+{% extends "myresume/base.html" %} {% block content %}
+<div class="max-w-3xl mx-auto">
+  <header class="mb-10">
+    <h1 class="text-4xl font-bold">$ {{ about.full_name }}</h1>
+    <p class="text-xl text-green-400">{{ about.position }}</p>
+    <div class="mt-4 flex flex-wrap gap-4">
+      <a href="#" class="border border-green-300 px-4 py-2 hover:bg-green-800"
+        >Download Resume</a
+      >
+      <a
+        href="#contact"
+        class="border border-green-300 px-4 py-2 hover:bg-green-800"
+        >Contact</a
+      >
+    </div>
+  </header>
+
+  <section class="mb-8">
+    <h2 class="text-xl mb-2">&gt; ABOUT ME</h2>
+    <p class="text-green-200">{{ about.bio }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-xl mb-4">&gt; SKILLS</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for category in skills %}
+      <div class="bg-gray-900 border border-green-700 rounded-lg p-4 shadow-md transition duration-200 transform hover:shadow-green-500/30 hover:scale-[1.02] hover:border-green-400"">
+        <h3 class="text-lg font-bold text-green-400 mb-2">
+          {{ category.name }}
+        </h3>
+        <ul class="list-disc list-inside text-green-200 text-sm space-y-1">
+          {% for skill in category.skills.all %}
+          <li>{{ skill.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-8">
+  <h2 class="text-xl mb-4">&gt; PROJECTS</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for project in projects %}
+    <a href="{% url 'project_detail' project.id %}" class="block group">
+  <div class="bg-gray-900 border border-green-700 rounded-lg p-4 shadow-md transition duration-200 transform group-hover:scale-[1.02] group-hover:shadow-green-500/30 group-hover:border-green-400">
+    <h3 class="text-lg font-bold text-green-300 mb-1 group-hover:text-green-100">{{ project.title }}</h3>
+    <p class="text-sm text-green-400 mb-2">{{ project.technologies }}</p>
+    <div class="relative h-32 overflow-hidden text-green-200 text-sm">
+      <p>{{ project.description }}</p>
+      <div class="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-black to-transparent"></div>
+    </div>
+  </div>
+</a>
+    {% endfor %}
+  </div>
+</section>
+
+  <section id="contact" class="mb-8">
+    <h2 class="text-xl mb-2">&gt; CONTACT</h2>
+    <ul class="text-green-200 space-y-1">
+      {% if contact.email %}
+      <li>📧 {{ contact.email }}</li>
+      {% endif %} {% if contact.telegram %}
+      <li>💬 Telegram: @{{ contact.telegram }}</li>
+      {% endif %} {% if contact.github %}
+      <li>🐙 GitHub: {{ contact.github }}</li>
+      {% endif %} {% if contact.linkedin %}
+      <li>🔗 LinkedIn: {{ contact.linkedin }}</li>
+      {% endif %}
+    </ul>
+  </section>
+</div>
+{% endblock %}
